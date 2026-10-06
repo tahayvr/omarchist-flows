@@ -1,0 +1,28 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Copy text from screen"
+description = "Drag over any text on screen, even in a picture, and it lands on your clipboard."
+icon = "pen-tool"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["ocr", "clipboard"]
+category = "Capture"
+license = "CC0-1.0"
+
+[[step]]
+type = "action"
+action = "capture.text"
+output = "text"
+
+[[step]]
+type = "action"
+action = "clipboard.set"
+text = "{{text}}"
+
+[[step]]
+type = "notify"
+title = "Copied"
+body = "{{text}}"

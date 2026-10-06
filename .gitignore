@@ -1,0 +1,12 @@
+# Built by `omarchist catalog build`
+dist/
+previous.json
+# The checks' copy of the app
+/omarchist
+# Never commit a key
+*.pem
+node_modules/
+.wrangler/
+.dev.vars
+
+SETUP.md

@@ -1,0 +1,25 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Translate selection"
+description = "Opens a translation of the text you have selected, or of the words you start it with."
+icon = "globe"
+on_error = "stop"
+input = "selection"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["translate", "selection"]
+category = "Web"
+license = "CC0-1.0"
+
+[[step]]
+type = "exec"
+command = "python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1]))' {{input}}"
+wait = true
+output = "encoded"
+
+[[step]]
+type = "action"
+action = "open.link"
+url = "https://translate.google.com/?sl=auto&tl=en&op=translate&text={{encoded}}"

@@ -1,0 +1,28 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Reading mode"
+description = "Night light on, a softer screen, and no notifications while you read."
+icon = "moon"
+on_error = "continue"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["reading", "night"]
+category = "System"
+license = "CC0-1.0"
+
+[[step]]
+type = "action"
+action = "nightlight.set"
+state = "on"
+
+[[step]]
+type = "action"
+action = "brightness.set"
+level = 45
+
+[[step]]
+type = "action"
+action = "dnd.set"
+state = "on"

@@ -1,0 +1,28 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "New project"
+description = "Asks for a name, makes a folder for it in Projects, and opens the folder."
+icon = "rocket"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["projects", "folders"]
+category = "Productivity"
+license = "CC0-1.0"
+
+[[step]]
+type = "ask"
+prompt = "Project name"
+output = "name"
+
+[[step]]
+type = "exec"
+command = "mkdir -p ~/Projects/{{name}}"
+wait = true
+
+[[step]]
+type = "action"
+action = "open.path"
+path = "~/Projects/{{name}}"

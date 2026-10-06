@@ -1,0 +1,39 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Save link"
+description = "Adds the link you copied to a reading list in your notes. Click the notification to open the list."
+icon = "star"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["links", "notes", "clipboard"]
+category = "Text"
+license = "CC0-1.0"
+
+[[step]]
+type = "if"
+check = "contains"
+value = "{{clipboard}}"
+text = "://"
+not = true
+
+[[step.then]]
+type = "notify"
+title = "No link on the clipboard"
+
+[[step.then]]
+type = "stop"
+
+[[step]]
+type = "exec"
+command = "mkdir -p ~/Notes && printf -- '- %s (%s)\\n' {{clipboard}} {{date}} >> ~/Notes/links.md"
+wait = true
+
+[[step]]
+type = "notify"
+title = "Link saved"
+body = "{{clipboard}}"
+on_click = "open"
+target = "~/Notes/links.md"

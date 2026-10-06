@@ -1,0 +1,75 @@
+# Runs when a pull request is merged: builds the index, signs it, and
+# uploads it with the new flow files to R2, where the Worker serves them.
+name: Publish catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "flows/**"
+      - "featured.txt"
+      - "verified.txt"
+      - "yanked.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One publish at a time, in order: the index's serial only grows.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # The secrets live in this environment, so only this job on main gets them.
+    environment: catalog
+    env:
+      BUCKET: omarchist-flows
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      AWS_EC2_METADATA_DISABLED: "true"
+      # R2 does not take the checksums newer AWS CLIs add to every upload.
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+      R2_ENDPOINT: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Get Omarchist
+        run: tools/get-omarchist.sh
+
+      - name: Fetch the published index
+        run: |
+          # Straight from the bucket, not through the Worker, so a cached
+          # copy is never mistaken for the latest.
+          aws s3 cp "s3://$BUCKET/v1/index.json" previous.json --endpoint-url "$R2_ENDPOINT" \
+            || rm -f previous.json
+
+      - name: Build and sign
+        env:
+          OMARCHIST_CATALOG_SIGNING_KEY: ${{ secrets.CATALOG_SIGNING_KEY }}
+        run: |
+          if [ -s previous.json ]; then
+            ./omarchist catalog build . --out dist --previous previous.json
+          else
+            ./omarchist catalog build . --out dist
+          fi
+          # Never publish an index the app would refuse.
+          jq -e '.signature | length > 0' dist/v1/index.json > /dev/null
+
+      - name: Upload the flow files
+        run: |
+          # First, so the index never lists a file that is not there yet.
+          # A published version is never rewritten: the build refuses a
+          # flow that changed without a new version.
+          aws s3 sync dist/v1/flows "s3://$BUCKET/v1/flows" --endpoint-url "$R2_ENDPOINT" \
+            --content-type "application/toml; charset=utf-8" --size-only
+
+      - name: Upload the index
+        run: |
+          aws s3 cp dist/v1/index.json "s3://$BUCKET/v1/index.json" --endpoint-url "$R2_ENDPOINT" \
+            --content-type "application/json; charset=utf-8"

@@ -1,0 +1,4 @@
+# The flows the Gallery shows first, one slug per line, in this order.
+timer
+translate-selection
+volume-presets

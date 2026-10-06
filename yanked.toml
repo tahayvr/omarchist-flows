@@ -1,0 +1,5 @@
+# Flows pulled from the gallery. A pulled flow is no longer offered, and
+# people who installed it are told why. Keep the flow's file in flows/.
+#
+# [slug-of-the-flow]
+# reason = "One short sentence people will read"

@@ -1,0 +1,48 @@
+# Checks the flows with Omarchist's own code, that each belongs to the
+# person proposing it, and that a published version is never rewritten.
+# The summary a reviewer reads is on the run's page.
+name: Check flows
+
+# On every pull request, whatever it touches: `check` is a required status,
+# and a required check that never runs would block the merge.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Get Omarchist
+        run: tools/get-omarchist.sh
+
+      - name: Check every flow
+        run: ./omarchist flow check --catalog flows/*.flow.toml
+
+      - name: Flows belong to who proposes them
+        env:
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: tools/check-author.sh "origin/${{ github.base_ref }}"
+
+      - name: Versions only grow
+        run: |
+          # The index people have now; none before the first publish.
+          curl -fsS https://flows.omarchist.com/v1/index.json -o previous.json || rm -f previous.json
+          if [ -s previous.json ]; then
+            ./omarchist catalog build . --out dist --previous previous.json
+          else
+            ./omarchist catalog build . --out dist
+          fi
+
+      - name: Summary for reviewers
+        if: always()
+        run: |
+          mapfile -t changed < <(tools/changed-flows.sh "origin/${{ github.base_ref }}")
+          tools/summarize.sh "${changed[@]}" >> "$GITHUB_STEP_SUMMARY"

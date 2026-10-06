@@ -1,0 +1,18 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Stand up"
+description = "A nudge to stand up and stretch. Made for an automation that runs every fifty minutes."
+icon = "sparkles"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["health", "break", "automation"]
+category = "Focus"
+license = "CC0-1.0"
+
+[[step]]
+type = "notify"
+title = "Stand up"
+body = "Stretch for a minute, then come back"

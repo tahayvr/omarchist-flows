@@ -1,0 +1,49 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Volume presets"
+description = "A menu with a quiet, a normal, and a loud volume, and mute."
+icon = "music"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["sound", "volume"]
+category = "Media"
+license = "CC0-1.0"
+
+[[step]]
+type = "menu"
+prompt = "Volume"
+
+[[step.choice]]
+label = "Quiet"
+
+[[step.choice.do]]
+type = "action"
+action = "volume.set"
+level = 20
+
+[[step.choice]]
+label = "Normal"
+
+[[step.choice.do]]
+type = "action"
+action = "volume.set"
+level = 50
+
+[[step.choice]]
+label = "Loud"
+
+[[step.choice.do]]
+type = "action"
+action = "volume.set"
+level = 80
+
+[[step.choice]]
+label = "Mute"
+
+[[step.choice.do]]
+type = "action"
+action = "volume.mute"
+state = "on"

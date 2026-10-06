@@ -1,0 +1,27 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Clean downloads"
+description = "Asks first, then moves downloads older than thirty days to the trash."
+icon = "leaf"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["cleanup", "downloads"]
+category = "Files"
+license = "CC0-1.0"
+
+[[step]]
+type = "confirm"
+prompt = "Move downloads older than 30 days to the trash?"
+
+[[step]]
+type = "exec"
+command = "find ~/Downloads -mindepth 1 -maxdepth 1 -mtime +30 -exec gio trash {} +"
+wait = true
+
+[[step]]
+type = "notify"
+title = "Downloads tidied"
+body = "Old files are in the trash"

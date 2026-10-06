@@ -1,0 +1,27 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Screenshot in three"
+description = "Gives you three seconds to set the scene, then saves a picture of the whole screen."
+icon = "camera"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["screenshot", "delay"]
+category = "Capture"
+license = "CC0-1.0"
+
+[[step]]
+type = "notify"
+title = "Screenshot in 3 seconds"
+
+[[step]]
+type = "wait"
+ms = 3000
+
+[[step]]
+type = "action"
+action = "capture.screenshot"
+of = "fullscreen"
+then = "save"

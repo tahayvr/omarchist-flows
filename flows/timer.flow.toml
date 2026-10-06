@@ -1,0 +1,33 @@
+# This is an Omarchist flow: https://omarchist.com/flows/
+format = 2
+name = "Timer"
+description = "Asks for a number of minutes and tells you when they are over."
+icon = "clock"
+on_error = "stop"
+
+[meta]
+author = "tahayvr"
+version = "1"
+tags = ["timer", "time"]
+category = "Focus"
+license = "CC0-1.0"
+
+[[step]]
+type = "ask"
+prompt = "Minutes"
+output = "minutes"
+
+[[step]]
+type = "notify"
+title = "Timer started"
+body = "{{minutes}} minutes"
+
+[[step]]
+type = "exec"
+command = "sleep {{minutes}}m"
+wait = true
+
+[[step]]
+type = "notify"
+title = "Time is up"
+body = "{{minutes}} minutes have passed"

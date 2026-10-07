@@ -17,9 +17,9 @@ bucket_name = "omarchist-flows"
 # the id it prints here, then `wrangler d1 execute omarchist-flows --remote
 # --file schema.sql`.
 [[d1_databases]]
-binding = "DB"
+binding = "omarchist_flows"
 database_name = "omarchist-flows"
-database_id = "REPLACE_WITH_THE_D1_DATABASE_ID"
+database_id = "6ba061e7-9fa3-4c11-80c5-e133380de3c9"
 
 # At most ten install counts a minute from one address.
 [[ratelimits]]

@@ -23,7 +23,9 @@ jobs:
           node-version: 24
       - name: Test
         working-directory: worker
-        run: node --test test/
+        # Default discovery (test/*.test.js): a bare directory argument is
+        # read as a module path on Node 24 and fails.
+        run: node --test
 
   deploy:
     needs: test

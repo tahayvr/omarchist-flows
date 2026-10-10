@@ -39,5 +39,5 @@ while IFS=$'\t' read -r status path; do
     echo "::error file=$path::This flow belongs to '$owner', and the pull request is from '$PR_AUTHOR'."
     failed=1
   fi
-done < <(git diff --name-status --diff-filter=AMD "$base"...HEAD -- 'flows/*.flow.toml')
+done < <(git diff --name-status --no-renames --diff-filter=AMD "$base"...HEAD -- 'flows/*.flow.toml')
 exit "$failed"

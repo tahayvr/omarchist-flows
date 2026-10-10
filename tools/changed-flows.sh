@@ -3,4 +3,4 @@
 # Usage: tools/changed-flows.sh <base ref>
 set -euo pipefail
 base="${1:?the base ref, such as origin/main}"
-git diff --name-only --diff-filter=AMR "$base"...HEAD -- 'flows/*.flow.toml'
+git diff --name-only --no-renames --diff-filter=AM "$base"...HEAD -- 'flows/*.flow.toml'

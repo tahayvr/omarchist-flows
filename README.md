@@ -27,7 +27,7 @@ flows/<slug>.flow.toml      one file per flow, its newest version
 - **This repository is the source of truth.** A flow, a new version of it, and its removal are all pull requests, so everything has a history and a reviewer.
 - **A published version never changes.** A change is a new version (`meta.version` goes up), and people who installed the flow see what changes before they take it.
 - **The index is signed.** CI signs the list of flows with a key only CI has. Omarchist carries the public key, refuses a list that does not verify, and checks each flow file against the hash in the list. The server only hands out files; it cannot add or alter a flow.
-- **Installing never runs anything.** A flow from the Catalog opens in Omarchist's editor for review and is saved only when its new owner says so.
+- **Installing never runs anything.** Omarchist shows a flow from the Catalog in full, every command included, and saves it only when its new owner presses Install.
 
 | Path | What it is |
 | --- | --- |

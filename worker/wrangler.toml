@@ -8,7 +8,7 @@ compatibility_date = "2026-09-01"
 pattern = "flows.omarchist.com"
 custom_domain = true
 
-# What CI uploads: v1/index.json, v1/index.json.sig, v1/flows/<slug>/<n>.flow.toml
+# What CI uploads: v1/index.json, v1/flows/<slug>/<n>.flow.toml
 [[r2_buckets]]
 binding = "BUCKET"
 bucket_name = "omarchist-flows"

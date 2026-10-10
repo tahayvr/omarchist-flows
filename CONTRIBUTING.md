@@ -1,14 +1,14 @@
 # Sharing a flow
 
-Thank you for sharing. A flow in the Gallery is something other people will run on their own computers, so the bar is: useful, readable, and safe.
+Thank you for sharing. A flow in the Catalog is something other people will run on their own computers, so the bar is: useful, readable, and safe.
 
 ## How to publish
 
 1. Build and test the flow in Omarchist.
-2. In its editor, open the menu and choose **Publish to the gallery…**. Enter your GitHub user name, pick a category, add up to five tags, and agree to release the flow under CC0.
+2. In its editor, open the menu and choose **Publish to the catalog…**. Enter your GitHub user name, pick a category, add up to five tags, and agree to release the flow under CC0.
 3. Your browser opens this repository with the file filled in. Press **Commit changes**, then **Create pull request**.
 4. A check lists what your flow does and flags anything a reviewer should look at. A reviewer reads it. You may be asked to change something.
-5. Once merged, the flow is in everyone's Gallery within minutes.
+5. Once merged, the flow is in everyone's Catalog within minutes.
 
 To publish a new version, change the flow in Omarchist and publish it again. Omarchist raises the version and opens the file for editing; replace its text with what Omarchist copied to your clipboard. A published version is never rewritten, so a change without a higher `meta.version` fails the check.
 

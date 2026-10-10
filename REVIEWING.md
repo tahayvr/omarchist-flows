@@ -6,7 +6,7 @@ Open the pull request's **Check flows** run and read its summary: it lists each 
 
 ## The checklist
 
-- [ ] **The check passed.** It verifies the file's format, the gallery's rules, that the author is the account that opened the pull request, and that the version went up.
+- [ ] **The check passed.** It verifies the file's format, the catalog's rules, that the author is the account that opened the pull request, and that the version went up.
 - [ ] **I understand every step.** If a command is too clever to follow, it does not go in. Ask for a simpler one.
 - [ ] **It does what its name and description say, and nothing else.**
 - [ ] **Nothing is hidden.** No encoded text that gets decoded and run, no script fetched from the web and run, no `eval` or `sh -c` on a variable.
@@ -37,5 +37,5 @@ When a published flow turns out to be harmful or broken:
 
 ## Featured and verified
 
-- `featured.txt` lists the flows the Gallery shows first. Keep it short and rotate it.
+- `featured.txt` lists the flows the Catalog shows first. Keep it short and rotate it.
 - `verified.txt` lists authors whose flows have been reviewed several times without trouble. It is earned by a history here and never given on request.
